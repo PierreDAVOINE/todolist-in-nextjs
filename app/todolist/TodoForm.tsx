@@ -11,9 +11,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { addTodo } from '../../lib/actions/todolist';
 
 type Props = {};
 
@@ -24,8 +24,6 @@ const formSchema = z.object({
 });
 
 export default function TodoForm({}: Props) {
-  const [tasks, setTasks] = useState<string[]>(['']);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,8 +31,8 @@ export default function TodoForm({}: Props) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setTasks([...tasks, values.task]);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await addTodo(values.task);
   }
 
   return (
@@ -59,16 +57,6 @@ export default function TodoForm({}: Props) {
           </div>
         </form>
       </Form>
-
-      <div>
-        <ul>
-          {tasks.map((task, index) => (
-            <li className="px-6 py-4" key={index}>
-              {task}
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 }
