@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { addTodo } from '../../lib/actions/todolist';
+import { addTodo } from '../../../lib/actions/todolist';
 
 type Props = {};
 
@@ -33,6 +33,7 @@ export default function TodoForm({}: Props) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await addTodo(values.task);
+    form.reset();
   }
 
   return (

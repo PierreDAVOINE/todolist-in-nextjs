@@ -1,18 +1,21 @@
-import { Checkbox } from '@/components/ui/checkbox';
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
 import { prisma } from '@/lib/prisma';
+import Task from './Task';
 
 type Props = {};
 
 export default async function List({}: Props) {
-  const tasks = await prisma.tasks.findMany();
+  const tasks = await prisma.tasks.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
 
   return (
     <Table>
@@ -24,12 +27,7 @@ export default async function List({}: Props) {
       </TableHeader>
       <TableBody>
         {tasks.map((task) => (
-          <TableRow key={task.id}>
-            <TableCell className="font-medium flex justify-start items-center">
-              <Checkbox id="test" checked={task.done} />
-            </TableCell>
-            <TableCell>{task.title}</TableCell>
-          </TableRow>
+          <Task key={task.id} task={task} />
         ))}
       </TableBody>
     </Table>
