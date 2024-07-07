@@ -45,10 +45,10 @@ export default function Task({ task }: Props) {
   };
 
   return (
-    <TableRow key={task.id} className="">
+    <TableRow key={task.id}>
       {!isEditing && (
         <>
-          <TableCell className="">
+          <TableCell>
             <Checkbox
               onCheckedChange={() => toggleTask(task.id)}
               checked={task.done}
