@@ -44,3 +44,16 @@ export async function deleteTask(id: number): Promise<void> {
 
   revalidatePath('/todolist');
 }
+
+export async function updateTask(id: number, newTitle: string): Promise<void> {
+  await prisma.tasks.update({
+    where: {
+      id,
+    },
+    data: {
+      title: newTitle,
+    },
+  });
+
+  revalidatePath('/todolist');
+}
