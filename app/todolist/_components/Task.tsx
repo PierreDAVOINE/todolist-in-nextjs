@@ -48,8 +48,11 @@ export default function Task({ task }: Props) {
     <TableRow key={task.id} className="">
       {!isEditing && (
         <>
-          <TableCell className="font-medium flex justify-start items-center">
-            <Checkbox onClick={() => toggleTask(task.id)} checked={task.done} />
+          <TableCell className="">
+            <Checkbox
+              onCheckedChange={() => toggleTask(task.id)}
+              checked={task.done}
+            />
           </TableCell>
           <TableCell className={task.done ? 'line-through' : ''}>
             {task.title}
